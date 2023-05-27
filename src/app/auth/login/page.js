@@ -37,7 +37,7 @@ export default function Home() {
   // handle submit to send data to the server
   const sendToServer = async (values) => {
     setIsLoading(true);
-    let { title, email, password, avatar, role } = values;
+    let { title, price, description, avatar, role } = values;
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -54,7 +54,6 @@ export default function Home() {
       headers: myHeaders,
       body: raw,
     };
-
     fetch("https://api.escuelajs.co/api/v1/products", requestOptions)
       .then((response) => response.json())
       .then((result) => {
@@ -90,7 +89,6 @@ export default function Home() {
           title: "",
           price: "",
           description: "",
-          category:0,
           file: null,
         }}
         validationSchema={validationSchema}
@@ -109,10 +107,10 @@ export default function Home() {
         }}>
         {({ isSubmitting, setFieldValue }) => (
           <Form className="flex flex-col items-center justify-center bg-slate-100 rounded-lg">
-            <h1 className="text-3xl font-bold mb-5 text-blue-500">Sing up Account</h1>
+            <h1 className="text-3xl font-bold mb-5 text-blue-500">Upload Product</h1>
             <div className="flex flex-col mb-5">
               <label htmlFor="name" className="mb-1 text-blue-500">
-                Product Name🇦🇷
+                Title
               </label>
               <Field
                 type="text"
@@ -130,45 +128,12 @@ export default function Home() {
                 Price
               </label>
               <Field
-                type="email"
-                name="email"
-                id="email"
-                className="border border-blue-500 rounded px-4 py-2"
-              />
+                type="text"
+                name="price"
+                id="price"
+                className="border border-blue-500 rounded px-4 py-2"/>
               <ErrorMessage
-                name="email"
-                component="div"
-                className="text-red-500"
-              />
-            </div>
-            <div className="flex flex-col mb-5">
-              <label htmlFor="password" className="mb-1 text-blue-500">
-                Password🌖
-              </label>
-              <Field
-                type="password"
-                name="password"
-                id="password"
-                className="border border-blue-500 rounded px-4 py-2"
-              />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="text-red-500"
-              />
-            </div>
-            <div className="flex flex-col mb-5">
-              <label htmlFor="confirmPassword" className="mb-1 text-blue-500">
-                Confirm Password
-              </label>
-              <Field
-                type="password"
-                name="confirmPassword"
-                id="confirmPassword"
-                className="border border-blue-500 rounded px-4 py-2"
-              />
-              <ErrorMessage
-                name="confirmPassword"
+                name="price"
                 component="div"
                 className="text-red-500"
               />
@@ -208,15 +173,14 @@ export default function Home() {
               />
             </div>
             <button
-              disabled={isSubmitting}
-              type="submit"
-              className={`${
-                isSubmitting
-                  ? "bg-cyan-500 cursor-not-allowed"
-                  : "bg-cyan-500  shadow-lg shadow-cyan-500/50 hover:bg-cyan-900"
-              } text-white font-bold py-2 px-4 rounded `}>
-              Submit⚡
-            </button>
+                disabled={isSubmitting}
+                type="submit"
+                className={`${isSubmitting
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-700"
+                  } text-white font-bold py-2 px-4 rounded`}>
+                Upload
+              </button>
           </Form>
         )}
       </Formik>
@@ -238,7 +202,7 @@ function FileUpload({ field, form, setFieldValue }) {
       <input
         type="file"
         onChange={handleChange}
-        className="border border-blue-500 rounded px-4 py-2"
+        className="border border-gray-500 rounded px-4 py-2 text-black"
       />
       {previewImage && (
         <img src={previewImage} alt="preview" className="mt-4 h-20 w-20" />
